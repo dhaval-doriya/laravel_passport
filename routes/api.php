@@ -27,10 +27,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login',  'login');
     Route::post('/password/reset/request',  'sendResetLinkEmail');
     Route::post('/password/reset',  'reset');
+    Route::post('/logout',  'logout')->middleware( [ 'auth:api']);
 });
 
 
-Route::get('/users', [UserController::class, 'getUsers']);
+Route::get('/users', [UserController::class, 'getUsers'])->middleware( [ 'auth:api' ]);
 
 Route::apiResource('products' ,ProductController::class)->middleware( [ 'auth:api' ,'scope:products']);
 
