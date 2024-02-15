@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Laravel\Passport\Exceptions\MissingScopeException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,6 +27,13 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (Throwable $e, $request) {
+            if ($e instanceof HttpException) {
+                return response()->json([ 'type' => 'error','message' => $e->getMessage()], $e->getStatusCode());
+            }
+            return response()->json([ 'type' => 'error','message' => 'Something went wrong.' . $e->getMessage()], 500);
         });
     }
 }

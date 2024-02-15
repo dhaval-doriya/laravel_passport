@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +22,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// User Registration
-Route::post('/register', [AuthController::class, 'register']);
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/register',  'register');
+    Route::post('/login',  'login');
+    Route::post('/password/reset/request',  'sendResetLinkEmail');
+    Route::post('/password/reset',  'reset');
+});
 
-// User Login
-Route::post('/login', [AuthController::class, 'login']);
-
-// Password Reset Request
-Route::post('/password/reset/request', [AuthController::class, 'sendResetLinkEmail']);
-
-// Password Reset
-Route::post('/password/reset', [AuthController::class, 'reset']);
 
 Route::get('/users', [UserController::class, 'getUsers']);
 
-Route::get('/products', [UserController::class, 'getProducts']);
+// Route::apiResource('products' ,ProductController::class)->middleware('checkPassportScopes:products');
+
+Route::apiResource('products' ,ProductController::class)->middleware( [ 'auth:api' ,'scope:products']);
 
 

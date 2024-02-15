@@ -36,11 +36,13 @@ class AuthController extends Controller
 
 
     public function login(Request $request)
-    {
+    {   
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $accessToken = $user->createToken('AuthToken')->accessToken;
-            return response()->json(['user' => $user, 'access_token' => $accessToken]);
+            // $scopes = ['products'];        
+
+            $generatedToken = $user->createToken('AuthToken', $scopes ?? []);
+            return response()->json(['user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
