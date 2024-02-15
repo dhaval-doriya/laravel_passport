@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// User Registration
+Route::post('/register', [AuthController::class, 'register']);
+
+// User Login
+Route::post('/login', [AuthController::class, 'login']);
+
+// Password Reset Request
+Route::post('/password/reset/request', [AuthController::class, 'sendResetLinkEmail']);
+
+// Password Reset
+Route::post('/password/reset', [AuthController::class, 'reset']);
+
+Route::get('/users', [UserController::class, 'getUsers']);
+
+Route::get('/products', [UserController::class, 'getProducts']);
+
+
