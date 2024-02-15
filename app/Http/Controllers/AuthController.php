@@ -39,7 +39,6 @@ class AuthController extends Controller
     {   
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            // $scopes = ['products'];        
 
             $generatedToken = $user->createToken('AuthToken', $scopes ?? []);
             return response()->json(['user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
