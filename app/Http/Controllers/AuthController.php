@@ -41,9 +41,9 @@ class AuthController extends Controller
             $user = Auth::user();
             $scopes = $user->permissions();
             $generatedToken = $user->createToken('AuthToken', $scopes ?? []);
-            return response()->json(['user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
+            return response()->json([ 'type'=>'success' ,'user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['type'=>'error', 'message' => 'Unauthorized'], 401);
         }
     }
 
