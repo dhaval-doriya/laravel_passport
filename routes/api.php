@@ -33,30 +33,20 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-Route::get('/users', [UserController::class, 'getUsers'])->middleware(['auth:api']);
 
 
 
 // Routes with 'auth' middleware
-// Route::apiResource('products' ,ProductController::class)->middleware( [ 'auth:api' ,'scope:products']);
 Route::middleware(['auth:api'])->group(function () {
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'index')->middleware('scope:products');
-        Route::post('/products', 'store');
-        Route::get('/products/{product}', 'show');
-        Route::put('/products/{product}', 'update');
-        Route::delete('/products/{product}', 'destroy');
-    });
-
-
+    Route::apiResource('products' ,ProductController::class)->middleware( ['scope:products']);
+    
+    Route::get('/users', [UserController::class, 'getUsers'])->middleware(['scope:view-users']);
     Route::get('/permissions', [UserController::class, 'getPermissions']);
     Route::get('/roles', [UserController::class, 'getRoles']);
     Route::put('/role/{role}', [UserController::class, 'updateRole']);
 
+    Route::put('/user/{user}', [UserController::class, 'updateUser']);
 
-    // Route::apiResource('products' ,ProductController::class)->middleware( ['scope:products']);
-    // Route::apiResource('role' ,RoleController::class);
-    // Route::apiResource('permission' ,PermissionController::class);
 });
 
 

@@ -11,17 +11,10 @@ class UserController extends Controller
 {
     public function getUsers(Request $request)
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         return response()->json(['users' => $users]);
     }
 
-    
-
-    public function getProducts(Request $request)
-    {
-        $users = User::all();
-        return response()->json(['users' => $users]);
-    }
 
 
     public function getPermissions(Request $request)
@@ -30,14 +23,15 @@ class UserController extends Controller
     }
 
     public function getRoles(Request $request)
-    {
-        return response()->json(['data' => Role::with('permission')->get() ]);
+    {   
+        $role =  Role::first()->with('permission');
+        return response()->json(['data' => Role::with('permissions')->get() ]);
     }
 
 
-     //update role and permission
+     //update user and role
      public function updateUser(Request $request , User $user)
-     {
+     {  
         $user->update($request->all());
         $user->roles()->sync($request->roles);
         return response()->json(['data' => $user]);
@@ -47,7 +41,7 @@ class UserController extends Controller
     public function updateRole(Request $request ,Role $role)
     {   
         $role->permission()->sync($request->permissions);
-        return response()->json(['data' => $role->with('permission')]);
+        return response()->json(['data' => $role->with('permissions')]);
     }
        
 }

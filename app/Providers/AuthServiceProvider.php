@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Exceptions\CustomMissingScopeException;
+use App\Models\Permission;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cache;
+use Laravel\Passport\Exceptions\MissingScopeException;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,8 +29,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::tokensCan([
-            'products' => 'All Product Access',
-        ]);
+
+        $permissions = Cache::remember('passport_permissions',100, function () {
+            $permissions = Permission::all();
+
+            return collect($permissions)->mapWithKeys(function ($item) {
+                return [$item->name => $item->name];
+            })->all();
+        });
+        
+        Passport::tokensCan($permissions);
     }
 }

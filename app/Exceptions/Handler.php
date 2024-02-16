@@ -33,6 +33,10 @@ class Handler extends ExceptionHandler
             if ($e instanceof HttpException) {
                 return response()->json([ 'type' => 'error','message' => $e->getMessage()], $e->getStatusCode());
             }
+
+            if ($e instanceof CustomMissingScopeException) {
+                return response()->json([ 'type' => 'error','message' => $e->getMessage()], 403);
+            }
             return response()->json([ 'type' => 'error','message' => 'Something went wrong.' . $e->getMessage()], 500);
         });
     }
