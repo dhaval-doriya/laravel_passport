@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -41,7 +44,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $scopes = $user->permissions();
             $generatedToken = $user->createToken('AuthToken', $scopes ?? []);
-            return response()->json([ 'type'=>'success' ,'user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
+            return response()->json([ 'type'=>'success', 'message' => 'You are successfully logged in' ,'user' => $user, 'access_token' => $generatedToken->accessToken ,'expires_at' => $generatedToken->token->expires_at,]);
         } else {
             return response()->json(['type'=>'error', 'message' => 'Unauthorized'], 401);
         }
@@ -109,5 +112,25 @@ class AuthController extends Controller
         );
         $instance = Route::dispatch($tokenRequest);
         return $instance;
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+
+    public function handleGoogleCallback()
+    {   
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        $user = User::where('email', $googleUser->email)->first();
+        if(!$user)
+        {
+            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => \Hash::make(rand(100000,999999))]);
+        }
+
+        Auth::login($user);
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

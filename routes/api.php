@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
+
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register',  'register');
     Route::post('/login',  'login');
@@ -50,7 +54,7 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 
-Route::post('/auth/Oauth', [AuthController::class, 'oauth'])->name('oauth.simulate');
+// Route::post('/auth/Oauth', [AuthController::class, 'oauth'])->name('oauth.simulate');
 
 
 
