@@ -90,4 +90,24 @@ class AuthController extends Controller
         return response()->json(['type' => 'sucess', 'access_token' => 'You have successfully logged out!']);
 
     }
+
+
+    public function oauth(Request $request)
+    {
+        $data = [
+            'grant_type' => $request->input('grant_type'),
+            'client_id' => $request->input('client_id'),
+            'client_secret' => $request->input('client_secret'),
+            'provider' => $request->input('provider'),
+            'access_token' => $request->input('access_token')
+        ];
+        $url = route('passport.token');
+        $request->request->add($data);
+        $tokenRequest = $request->create(
+            $url,
+            'post',
+        );
+        $instance = Route::dispatch($tokenRequest);
+        return $instance;
+    }
 }

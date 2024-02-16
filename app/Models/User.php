@@ -63,4 +63,10 @@ class User extends Authenticatable
         }
         return $userPermissions;
     }
+
+
+    public function linkedSocialAccounts()
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
+    }
 }
