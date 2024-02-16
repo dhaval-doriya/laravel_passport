@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +29,25 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login',  'login');
     Route::post('/password/reset/request',  'sendResetLinkEmail');
     Route::post('/password/reset',  'reset');
+    Route::post('/logout',  'logout')->middleware(['auth:api']);
 });
 
 
-Route::get('/users', [UserController::class, 'getUsers']);
 
-Route::apiResource('products' ,ProductController::class)->middleware( [ 'auth:api' ,'scope:products']);
+
+
+// Routes with 'auth' middleware
+Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('products' ,ProductController::class)->middleware( ['scope:products']);
+    
+    Route::get('/users', [UserController::class, 'getUsers'])->middleware(['scope:view-users']);
+    Route::get('/permissions', [UserController::class, 'getPermissions']);
+    Route::get('/roles', [UserController::class, 'getRoles']);
+    Route::put('/role/{role}', [UserController::class, 'updateRole']);
+
+    Route::put('/user/{user}', [UserController::class, 'updateUser']);
+
+});
+
 
 
