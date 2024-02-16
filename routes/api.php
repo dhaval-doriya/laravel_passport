@@ -50,4 +50,7 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 
+Route::post('/auth/Oauth', [AuthController::class, 'oauth'])->name('oauth.simulate');
+
+
 
