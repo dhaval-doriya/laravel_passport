@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_id'
     ];
 
     /**
@@ -64,6 +65,11 @@ class User extends Authenticatable
         return $userPermissions;
     }
 
+
+    public function company(){
+        return $this->belongsTo(Company::class);
+        // return Company::where(['id' => $this->company_id])->first()->name;
+    }
 
     public function linkedSocialAccounts()
     {

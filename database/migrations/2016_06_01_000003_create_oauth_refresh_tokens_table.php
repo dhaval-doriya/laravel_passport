@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -10,13 +11,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    {   
+        $dbName = DB::connection()->getDatabaseName();
+        if ($dbName == env('DB_DATABASE')) {
         Schema::create('oauth_refresh_tokens', function (Blueprint $table) {
             $table->string('id', 100)->primary();
             $table->string('access_token_id', 100)->index();
             $table->boolean('revoked');
             $table->dateTime('expires_at')->nullable();
         });
+    }
     }
 
     /**

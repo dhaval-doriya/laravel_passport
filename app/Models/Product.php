@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    // protected $connection= 'second_db_connection';
+
     // protected $primaryKey = 'product_id';
 
     protected $fillable = [

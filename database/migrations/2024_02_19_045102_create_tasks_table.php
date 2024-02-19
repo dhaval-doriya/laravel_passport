@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $dbName = DB::connection()->getDatabaseName();
-        if ($dbName == env('DB_DATABASE')) {
-            Schema::create('permissions', function (Blueprint $table) {
-                $table->uuid('id');
-                $table->string('name');
-            });
-        }
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->string('name');
+            $table->boolean('status')->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('tasks');
     }
 };

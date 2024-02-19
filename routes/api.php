@@ -37,24 +37,16 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-
-
-
 // Routes with 'auth' middleware
 Route::middleware(['auth:api'])->group(function () {
-    Route::apiResource('products' ,ProductController::class)->middleware( ['scope:products']);
-    
     Route::get('/users', [UserController::class, 'getUsers'])->middleware(['scope:view-users']);
     Route::get('/permissions', [UserController::class, 'getPermissions']);
     Route::get('/roles', [UserController::class, 'getRoles']);
     Route::put('/role/{role}', [UserController::class, 'updateRole']);
 
     Route::put('/user/{user}', [UserController::class, 'updateUser']);
-
 });
 
-
-// Route::post('/auth/Oauth', [AuthController::class, 'oauth'])->name('oauth.simulate');
-
-
-
+Route::middleware(['auth:api' , 'check'])->group(function () {
+    Route::apiResource('products', ProductController::class)->middleware([ 'scope:products']);
+});
