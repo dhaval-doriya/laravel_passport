@@ -17,7 +17,8 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+        $request['created_by'] = auth()->user()->id;
         $product = Product::create($request->all());
         return response()->json($product, 201);
     }

@@ -18,8 +18,9 @@ class UserController extends Controller
 
 
     public function getPermissions(Request $request)
-    {
-        return response()->json(['data' => Permission::all()]);
+    {   
+        $permissions = Permission::all();
+        return response()->json(['data' => $permissions]);
     }
 
     public function getRoles(Request $request)

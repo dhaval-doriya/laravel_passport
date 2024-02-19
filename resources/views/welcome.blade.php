@@ -36,9 +36,9 @@
         @endif
 
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
-            <div class="flex justify-center">
+            {{-- <div class="flex justify-center">
                 <a href="{{ route('google.redirect') }}" class="btn btn-primary"> Login with Google </a>
-            </div>
+            </div> --}}
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
