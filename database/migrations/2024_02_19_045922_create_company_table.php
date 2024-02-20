@@ -22,14 +22,15 @@ return new class extends Migration
                     $table->string('descritpion')->nullable();
                     $table->timestamps();
                 });
+                DB::table('companies')->insert(['id' => uuid_create(), 'name' => 'company_1']);
+                DB::table('companies')->insert(['id' => uuid_create(), 'name' => 'company_2']);
             }
-            DB::table('companies')->insert(['id' => uuid_create(), 'name' => 'company_1']);
-            DB::table('companies')->insert(['id' => uuid_create(), 'name' => 'company_2']);
 
-            Schema::table('users', function (Blueprint $table) {
-                $table->uuid('company_id');
-            });
-
+            if (!Schema::hasColumn('users', 'company_id')) {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->uuid('company_id');
+                });
+            }
             $company_id =   DB::table('companies')->where('name', 'company_1')->first()->id;
             User::where('name', '!=', null)->update(['company_id' => $company_id]);
         }

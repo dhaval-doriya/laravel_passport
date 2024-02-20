@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 
@@ -7,17 +8,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
-{   
+{
 
 
     public function index(Request $request)
-    {   
+    {
         $products = Product::all();
-        return response()->json($products);
+        return response()->json(['type' => 'sucess', 'data' => $products]);
     }
 
     public function store(Request $request)
-    {   
+    {
         $request['created_by'] = auth()->user()->id;
         $product = Product::create($request->all());
         return response()->json($product, 201);

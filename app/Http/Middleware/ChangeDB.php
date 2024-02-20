@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
 use Laravel\Passport\Exceptions\AuthenticationException;
 
-class Check
+class ChangeDB
 {
     public function handle(Request $request, Closure $next, ...$scopes)
     {   
@@ -21,9 +21,9 @@ class Check
         // Config::set('database.default', $connectionName);
         $getHost = request()->getHost();
 
-        if ($getHost == 'company_two.wcg' && $companyName == 'company_2') {
+        if ($getHost == 'company_two.wcg' || $companyName == 'company_2') {
             Config::set('database.default', 'company_2');
-        } else if ($getHost == 'company_one.wcg' && $companyName == 'company_1') {
+        } else if ($getHost == 'company_one.wcg' || $companyName == 'company_1') {
             Config::set('database.default', 'company_1');
         } else {
             abort(403, 'Unauthorized access.');

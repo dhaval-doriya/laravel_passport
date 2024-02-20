@@ -39,6 +39,9 @@
             {{-- <div class="flex justify-center">
                 <a href="{{ route('google.redirect') }}" class="btn btn-primary"> Login with Google </a>
             </div> --}}
+
+            {{-- <img src="" {{ route('image' ,['name' => 'download.jpeg']) }}   alt="" srcset=""> --}}
+        <img src="{{ asset('images/download.jpeg')}}" alt="">
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

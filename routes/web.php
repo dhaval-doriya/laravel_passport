@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/images/{name}' , function ($name) {
+    return public_path('images/'.$name);
+})->name('image');
 //for testting
 // Route::get('/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
 // Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');

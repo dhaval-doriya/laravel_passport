@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -42,11 +43,16 @@ Route::middleware(['auth:api'])->controller(UserController::class)->group(functi
     Route::get('/users',  'getUsers')->name('user.index');
     Route::get('/permissions', 'getPermissions')->name('permission.index');
     Route::get('/roles',  'getRoles')->name('role.index');
+    Route::get('/role/{role}',  'getRole')->name('role.get');
     Route::put('/role/{role}',  'updateRole')->name('role.update');
     Route::put('/user/{user}',  'updateUser')->name('user.update');
 });
 
-Route::middleware(['auth:api', 'checkPermission',  'changeDB'])->group(function () {
+// 'checkPermission' m 'changeDB'
+Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('products', ProductController::class);
-    Route::apiResource('subscription', SubscriptionController::class);
+    // Route::apiResource('subscription', SubscriptionController::class);
+    Route::apiResource('customers', CustomerController::class);
 });
+
+

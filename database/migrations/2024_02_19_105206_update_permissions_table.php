@@ -18,7 +18,6 @@ return new class extends Migration
                 $table->string('name')->unique()->change();
             });
             DB::table('permissions')->truncate();
-
         }
     }
 
@@ -27,6 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        $dbName = DB::connection()->getDatabaseName();
+        if ($dbName == env('DB_DATABASE')) {
+            Schema::table('permissions', function (Blueprint $table) {
+                $table->string('name')->change();
+            });
+        }
     }
 };

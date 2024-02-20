@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Cashier\Billable;
 
-class Product extends Model
+class Customer extends Model
 {
-    use HasFactory;
-
-    // protected $connection= 'second_db_connection';
-
-    // protected $primaryKey = 'product_id';
+    use HasFactory,HasUuids, Billable;
 
     protected $fillable = [
-        'name', 'description', 'price', 'created_by'
+        'name', 'email', 'profile_picture' ,'password'
     ];
 }

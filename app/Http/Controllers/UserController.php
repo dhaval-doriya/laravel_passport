@@ -15,34 +15,41 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-
-
     public function getPermissions(Request $request)
-    {   
+    {
         $permissions = Permission::all();
         return response()->json(['data' => $permissions]);
     }
 
     public function getRoles(Request $request)
-    {   
+    {
         $role =  Role::first()->with('permission');
-        return response()->json(['data' => Role::with('permissions')->get() ]);
+        return response()->json(['data' => Role::with('permissions')->get()]);
     }
 
-
-     //update user and role
-     public function updateUser(Request $request , User $user)
-     {  
+    //update user and role
+    public function updateUser(Request $request, User $user)
+    {
         $user->update($request->all());
         $user->roles()->sync($request->roles);
         return response()->json(['data' => $user]);
-     }
-     
-    //update role and permission
-    public function updateRole(Request $request ,Role $role)
-    {   
-        $role->permission()->sync($request->permissions);
-        return response()->json(['data' => $role->with('permissions')]);
     }
-       
+
+    //update role and permission
+    public function updateRole(Request $request, Role $role)
+    {
+        if ($role->permissions()) {
+            $role->permissions()->sync($request->permissions);
+        } else {
+            $role->permission()->attach($request->permissions);
+        }
+        return response()->json(['message' => 'role permissions updated sucessfully', 'data' => $role->with('permissions')]);
+    }
+
+    //get role
+    public function getRole(Request $request, Role $role)
+    {
+        $role = Role::where('id', $role->id)->with('permissions')->first();
+        return response()->json(['data' => $role]);
+    }
 }

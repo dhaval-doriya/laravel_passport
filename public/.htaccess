@@ -14,8 +14,52 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
+
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # RewriteEngine On
+
+ 
+    # RewriteCond = define rule condition
+    # HTTP_REFERER = check from where the request originated
+    # ! = exclude
+    # ^ = start of string
+    # [NC] = case insensitive search
+    # RewriteCond %{HTTP_REFERER} !^http://localhost:8000/images/  [NC]
+    
+    # RewriteRule \.(gif|jpg|jpeg|png|mp4|mov|mkv|flv)$ - [F,L]
+    
+    
+    # Allow direct access to images from your domain
+    # RewriteCond %{HTTP_REFERER} !^$
+    # RewriteCond %{HTTP_REFERER} !^http://company_one.wcg/images/.*$  [NC]
+    # # RewriteCond %{HTTP_REFERER} !^http://(www\.)?yourdomain.com/.*$ [NC]
+
+    # # Block hotlinking for images
+    # RewriteRule \.(gif|jpg|jpeg|png|mp4|mov|mkv|flv)$ - [F,L]
+
+
+    # RewriteEngine On
+
+    # Allow direct access to images from your domain
+    # RewriteCond %{HTTP_REFERER} !^$
+    # # RewriteCond %{HTTP_REFERER} !^http://company_one\.wcg\images [NC]
+    # RewriteCond %{HTTP_REFERER} ^$
+    
+    # Block hotlinking for images
+    # RewriteRule \.(gif|jpg|jpeg|png|mp4|mov|mkv|flv)$ - [F,L]
+    
+    
+    # Allow direct access to images from your domain or when HTTP_REFERER is empty
+    # RewriteCond %{HTTP_REFERER} !^http://company_one\.wcg/ [NC]
+    # RewriteCond %{HTTP_REFERER} !^$
+    
+    
+    RewriteCond %{HTTP_REFERER} !^http://company_one.wcg/  [NC]
+    # Block hotlinking for images
+    RewriteRule \.(gif|jpg|jpeg|png|mp4|mov|mkv|flv)$ - [F,L]
+
 </IfModule>
