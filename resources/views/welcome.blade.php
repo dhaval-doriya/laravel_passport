@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Fonts -->
 </head>
@@ -46,7 +47,7 @@
 
             <script src="https://js.stripe.com/v3/"></script>
             <script>
-                var stripe = Stripe('pk_test_51KlB0XB98YvBhyuIaHzuE6zxpUwoTrAkMktCCFLE6smHiVN7nr133D2amMKBqHJFk9aqmbnp37kIF9E3lm2cbZ4C00qLlEjune');
+                var stripe = Stripe(env('STRIPE_KEY '));
                 var elements = stripe.elements();
                 var cardElement = elements.create('card');
                 cardElement.mount('#card-element');
@@ -84,7 +85,7 @@
 
                     var data = JSON.stringify({
                         token: token,
-                        user_id : "9b61637d-776a-4c36-870c-5fcdb593625a"
+                        user_id: "9b61637d-776a-4c36-870c-5fcdb593625a"
                     });
                     xhr.send(data);
                 }
@@ -108,7 +109,9 @@
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
 </body>
 
