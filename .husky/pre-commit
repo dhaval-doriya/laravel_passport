@@ -3,4 +3,4 @@
 
 npx pretty-quick --staged
 npm run format
-# npm run format_php
+npm run format_php
