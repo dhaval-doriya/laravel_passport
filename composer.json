@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -16,7 +19,10 @@
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+        "ccinn/composer-husky-plugin": "^0.2.0",
+        "ccinn/husky-php": "^0.4.2",
         "fakerphp/faker": "^1.23",
+        "friendsofphp/php-cs-fixer": "^3.49",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
@@ -49,7 +55,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "post-install-cmd": "npm_config_loglevel=silent npm install"
     },
     "extra": {
         "laravel": {
@@ -62,7 +69,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "ccinn/composer-husky-plugin": true
         }
     },
     "minimum-stability": "stable",
