@@ -2,5 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npx pretty-quick --staged
-npm run format
+# npm run format
+npm run format2
 npm run format_php

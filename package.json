@@ -1,6 +1,6 @@
 {
     "private": true,
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "format": "vendor/bin/php-cs-fixer fix",
         "format2": "prettier --log-level warn --write \"**/*.{js,css,md}\"",
@@ -27,5 +27,8 @@
             "pre-commit": "lint-staged",
             "pre-push": "./vendor/bin/phpunit"
         }
+    },
+    "dependencies": {
+        "@shufo/prettier-plugin-blade": "^1.14.0"
     }
 }
