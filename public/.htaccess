@@ -59,6 +59,7 @@
     
     
     RewriteCond %{HTTP_REFERER} !^http://company_one.wcg/  [NC]
+        # RewriteCond %{HTTP_REFERER} !^http://localhost:8000/  [NC]
     # Block hotlinking for images
     RewriteRule \.(gif|jpg|jpeg|png|mp4|mov|mkv|flv)$ - [F,L]
 

@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('card');
 })->name('home');
 
-Route::get('/images/{name}' , function ($name) {
-    return public_path('images/'.$name);
-})->name('image');
+// Route::get('/images_test/{name}?{token}' , function ($name , $token) {
+//     if (!$token) {
+//         return abort(403, 'no acess');
+//     }
+//     return public_path('images/'.$name);
+// })->name('image');
 //for testting
 // Route::get('/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
 // Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');

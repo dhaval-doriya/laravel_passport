@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -52,7 +53,19 @@ Route::middleware(['auth:api'])->controller(UserController::class)->group(functi
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('products', ProductController::class);
     // Route::apiResource('subscription', SubscriptionController::class);
-    Route::apiResource('customers', CustomerController::class);
+    Route::apiResource('customers', CustomerController::class);   
 });
+
+
+Route::post('/generate-token', [PaymentController::class, 'generateToken'])->name('generate.token');
+
+Route::post('/payment', [PaymentController::class,'processPayment']);
+
+Route::post('/add-card', [PaymentController::class,'addcard']);
+
+Route::get('/get-transactions', [PaymentController::class,'getTransactions']);
+
+Route::post('/create-customer/{customer}', [PaymentController::class,'createCustomer']);
+
 
 
